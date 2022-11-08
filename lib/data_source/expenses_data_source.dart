@@ -1,0 +1,25 @@
+import 'package:xpns_trckr_api/models/expense.dart';
+
+/// An interface for an expenses data source.
+/// An expenses data source supports basic C.R.U.D operations.
+/// * C - Create
+/// * R - Read
+/// * U - Update
+/// * D - Delete
+abstract class ExpensesDataSource {
+  /// Create and return the newly created [Expense].
+  Future<Expense> create(Expense todo);
+
+  /// Return all [Expense]s.
+  Future<List<Expense>> readAll();
+
+  /// Return a [Expense] with the provided [id] if one exists.
+  Future<Expense?> read(String id);
+
+  /// Update the [Expense] with the provided [id] to match [expense] and
+  /// return the updated todo.
+  Future<Expense> update(String id, Expense expense);
+
+  /// Delete the [Expense] with the provided [id] if one exists.
+  Future<void> delete(String id);
+}
