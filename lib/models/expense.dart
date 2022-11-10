@@ -19,6 +19,7 @@ class Expense extends Equatable {
   const Expense({
     required this.id,
     required this.userId,
+    required this.description,
     required this.value,
     required this.time,
   });
@@ -26,12 +27,15 @@ class Expense extends Equatable {
   /// The unique identifier of the expense.
   ///
   /// Cannot be empty.
-  final String id;
+  final int id;
 
   /// The user whose this expense belongs to.
   ///
   /// Cannot be empty.
-  final String userId;
+  final int userId;
+
+  /// Briefly description about what were expended.
+  final String description;
 
   /// How much the user expend with this expense.
   final double value;
@@ -41,14 +45,16 @@ class Expense extends Equatable {
 
   /// Returns a copy of this expense with the given values updated.
   Expense copyWith({
-    String? id,
-    String? userId,
+    int? id,
+    int? userId,
+    String? description,
     double? value,
     DateTime? time,
   }) =>
       Expense(
         id: id ?? this.id,
         userId: userId ?? this.userId,
+        description: description ?? this.description,
         value: value ?? this.value,
         time: time ?? this.time,
       );
