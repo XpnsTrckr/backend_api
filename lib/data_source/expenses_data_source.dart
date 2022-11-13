@@ -8,18 +8,18 @@ import 'package:xpns_trckr_api/models/expense.dart';
 /// * D - Delete
 abstract class ExpensesDataSource {
   /// Create and return the newly created [Expense].
-  Future<Expense> create(Expense expense);
+  Future<void> create(Expense expense);
 
   /// Return all [Expense]s.
   Future<List<Expense>> readAll();
 
   /// Return a [Expense] with the provided [id] if one exists.
-  Future<Expense?> read(String id);
+  Future<Expense?> read(int id);
 
   /// Update the [Expense] with the provided [id] to match [expense] and
   /// return the updated todo.
-  Future<Expense> update(String id, Expense expense);
+  Future<void> update(int id, Expense expense);
 
   /// Delete the [Expense] with the provided [id] if one exists.
-  Future<void> delete(String id);
+  Future<void> delete(int id);
 }
