@@ -5,7 +5,16 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:xpns_trckr_api/data_source/expenses_data_source.dart';
 import 'package:xpns_trckr_api/models/expense.dart';
 
-FutureOr<Response> onRequest(RequestContext context, int id) async {
+FutureOr<Response> onRequest(RequestContext context, String str) async {
+  final id = int.tryParse(str);
+
+  if (id == null) {
+    return Response(
+      statusCode: HttpStatus.badRequest,
+      body: 'Query ID must be an integer',
+    );
+  }
+
   final dataSource = context.read<ExpensesDataSource>();
   final expense = await dataSource.read(id);
 
