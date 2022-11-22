@@ -39,7 +39,7 @@ FutureOr<Response> onRequest(RequestContext context, String query) async {
 
 Future<Response> _put(RequestContext context, int id) async {
   final dataSource = context.read<ExpensesDataSource>();
-  final json = context.request.json() as Map<String, dynamic>;
+  final json = await context.request.json() as Map<String, dynamic>;
   final expense = Expense.fromJson(json);
 
   await dataSource.update(id, expense);
