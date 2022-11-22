@@ -33,8 +33,5 @@ Future<Response> _post(RequestContext context) async {
 
   await dataSource.create(expense);
 
-  return Response.json(
-    statusCode: HttpStatus.created,
-    body: expense.toJson(),
-  );
+  return Response.json(statusCode: HttpStatus.created, body: expense);
 }
