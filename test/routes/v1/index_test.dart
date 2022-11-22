@@ -11,10 +11,14 @@ class _MockRequestContext extends Mock implements RequestContext {}
 void main() {
   group('GET /v1', () {
     test('responds with a 200 and welcome message', () {
+      // Arrange
       final context = _MockRequestContext();
-      final response = route.onRequest(context);
       const welcome = 'Welcome to Xpns Trckr API v1!';
 
+      // Act
+      final response = route.onRequest(context);
+
+      // Assert
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.body(), completion(equals(welcome)));
     });
