@@ -55,5 +55,98 @@ void main() {
       // Assert
       expect(response.statusCode, HttpStatus.methodNotAllowed);
     });
+
+    test('when method is HEAD', () async {
+      // Arrange
+      when(() => request.method).thenReturn(HttpMethod.head);
+
+      // Act
+      final response = await route.onRequest(context);
+
+      // Assert
+      expect(response.statusCode, HttpStatus.methodNotAllowed);
+    });
+
+    test('when method is OPTIONS', () async {
+      // Arrange
+      when(() => request.method).thenReturn(HttpMethod.options);
+
+      // Act
+      final response = await route.onRequest(context);
+
+      // Assert
+      expect(response.statusCode, HttpStatus.methodNotAllowed);
+    });
+
+    test('when method is PATCH', () async {
+      // Arrange
+      when(() => request.method).thenReturn(HttpMethod.patch);
+
+      // Act
+      final response = await route.onRequest(context);
+
+      // Assert
+      expect(response.statusCode, HttpStatus.methodNotAllowed);
+    });
+
+    test('when method is PUT', () async {
+      // Arrange
+      when(() => request.method).thenReturn(HttpMethod.put);
+
+      // Act
+      final response = await route.onRequest(context);
+
+      // Assert
+      expect(response.statusCode, HttpStatus.methodNotAllowed);
+    });
+  });
+
+  group('GET /expenses', () {
+    test('responds with a 200 and an empty list', () async {
+      // Arrange
+      when(() => request.method).thenReturn(HttpMethod.get);
+      when(() => dataSource.readAll()).thenAnswer((_) async => []);
+
+      // Act
+      final response = await route.onRequest(context);
+
+      // Assert
+      expect(response.statusCode, HttpStatus.ok);
+      expect(response.json(), completion(isEmpty));
+
+      verify(() => dataSource.readAll()).called(1);
+    });
+
+    test('responds with a 200 and a populated list', () async {
+      // Arrange
+      when(() => request.method).thenReturn(HttpMethod.get);
+      when(() => dataSource.readAll()).thenAnswer((_) async => [expense]);
+
+      // Act
+      final response = await route.onRequest(context);
+
+      // Assert
+      expect(response.statusCode, HttpStatus.ok);
+      expect(response.json(), completion(equals([expense.toJson()])));
+
+      verify(() => dataSource.readAll()).called(1);
+    });
+  });
+
+  group('POST /expenses', () {
+    test('responds with a 201 and the newly created Expense', () async {
+      // Arrange
+      when(() => request.method).thenReturn(HttpMethod.post);
+      when(() => request.json()).thenAnswer((_) async => expense.toJson());
+      when(() => dataSource.create(any())).thenAnswer((_) async => expense);
+
+      // Act
+      final response = await route.onRequest(context);
+
+      // Assert
+      expect(response.statusCode, HttpStatus.created);
+      expect(response.json(), completion(equals(expense.toJson())));
+      verify(() => dataSource.create(any())).called(1);
+    });
   });
 }
