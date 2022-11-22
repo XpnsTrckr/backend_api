@@ -20,6 +20,6 @@ jobs:
     with:
       dart_sdk: "stable"
       analyze_directories: "lib routes test"
-      report_on: "lib routes"
+      report_on: "routes"
       coverage_excludes: "*.g.dart"
       min_coverage: 70
