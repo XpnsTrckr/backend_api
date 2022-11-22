@@ -19,18 +19,12 @@ void main() {
   late Request request;
   late ExpensesDataSource dataSource;
 
-  const id = 42;
-  const userId = 84;
-  const description = 'test description';
-  const value = 128.0;
-  final time = DateTime.now();
-
   final expense = Expense(
-    id: id,
-    userId: userId,
-    description: description,
-    value: value,
-    time: time,
+    id: 42,
+    userId: 84,
+    description: 'meaningful description',
+    value: 128,
+    time: DateTime.now(),
   );
 
   setUpAll(() => registerFallbackValue(expense));
