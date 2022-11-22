@@ -31,7 +31,7 @@ Future<Response> _post(RequestContext context) async {
   final json = await context.request.json() as Map<String, dynamic>;
   final expense = Expense.fromJson(json);
 
-  await dataSource.create(expense);
+  final created = await dataSource.create(expense);
 
-  return Response.json(statusCode: HttpStatus.created, body: expense);
+  return Response.json(statusCode: HttpStatus.created, body: created);
 }

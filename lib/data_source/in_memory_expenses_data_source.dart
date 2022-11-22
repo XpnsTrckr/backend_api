@@ -7,7 +7,11 @@ class InMemoryExpensesDataSource extends ExpensesDataSource {
   final _cache = <int, Expense>{};
 
   @override
-  Future<void> create(Expense expense) async => _cache[expense.id] = expense;
+  Future<Expense> create(Expense expense) async {
+    final created = expense.copyWith();
+    _cache[created.id] = created;
+    return created;
+  }
 
   @override
   Future<List<Expense>> readAll() async => _cache.values.toList();
@@ -16,7 +20,7 @@ class InMemoryExpensesDataSource extends ExpensesDataSource {
   Future<Expense?> read(int id) async => _cache[id];
 
   @override
-  Future<void> update(int id, Expense expense) async =>
+  Future<Expense> update(int id, Expense expense) async =>
       _cache.update(id, (value) => expense);
 
   @override
