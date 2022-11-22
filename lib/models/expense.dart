@@ -66,5 +66,5 @@ class Expense extends Equatable {
   Map<String, dynamic> toJson() => _$ExpenseToJson(this);
 
   @override
-  List<Object?> get props => [id, userId, value, time];
+  List<Object?> get props => [id, userId, description, value, time];
 }
