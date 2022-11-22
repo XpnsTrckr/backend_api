@@ -4,7 +4,7 @@ import 'package:xpns_trckr_api/models/expense.dart';
 
 class _ExpensesDataSource implements ExpensesDataSource {
   @override
-  Future<void> create(Expense expense) => throw UnimplementedError();
+  Future<Expense> create(Expense expense) => throw UnimplementedError();
 
   @override
   Future<void> delete(int id) => throw UnimplementedError();
@@ -16,7 +16,7 @@ class _ExpensesDataSource implements ExpensesDataSource {
   Future<List<Expense>> readAll() => throw UnimplementedError();
 
   @override
-  Future<void> update(int id, Expense expense) => throw UnimplementedError();
+  Future<Expense> update(int id, Expense expense) => throw UnimplementedError();
 }
 
 void main() {
