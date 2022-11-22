@@ -53,7 +53,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
 
     test('when method is OPTIONS', () async {
@@ -64,7 +64,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
 
     test('when method is PATCH', () async {
@@ -75,7 +75,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
 
     test('when method is POST', () async {
@@ -86,7 +86,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
   });
 
@@ -100,7 +100,7 @@ void main() {
       final response = await route.onRequest(context, invalid);
 
       // Assert
-      expect(response.statusCode, HttpStatus.badRequest);
+      expect(response.statusCode, equals(HttpStatus.badRequest));
 
       verifyNever(() => dataSource.read(any()));
     });
@@ -116,7 +116,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.notFound);
+      expect(response.statusCode, equals(HttpStatus.notFound));
       verify(() => dataSource.read(any(that: equals(id)))).called(1);
     });
   });
@@ -131,7 +131,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.ok);
+      expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(equals(expense.toJson())));
 
       verify(() => dataSource.read(any(that: equals(id)))).called(1);
@@ -154,7 +154,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.ok);
+      expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(equals(updated.toJson())));
 
       verify(() => dataSource.read(any(that: equals(id)))).called(1);
@@ -178,7 +178,7 @@ void main() {
       final response = await route.onRequest(context, query);
 
       // Assert
-      expect(response.statusCode, HttpStatus.noContent);
+      expect(response.statusCode, equals(HttpStatus.noContent));
       expect(response.body(), completion(isEmpty));
 
       verify(() => dataSource.read(any(that: equals(id)))).called(1);

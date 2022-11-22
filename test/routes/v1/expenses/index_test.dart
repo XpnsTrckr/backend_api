@@ -47,7 +47,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
 
     test('when method is HEAD', () async {
@@ -58,7 +58,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
 
     test('when method is OPTIONS', () async {
@@ -69,7 +69,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
 
     test('when method is PATCH', () async {
@@ -80,7 +80,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
 
     test('when method is PUT', () async {
@@ -91,7 +91,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.methodNotAllowed);
+      expect(response.statusCode, equals(HttpStatus.methodNotAllowed));
     });
   });
 
@@ -105,7 +105,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.ok);
+      expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(isEmpty));
 
       verify(() => dataSource.readAll()).called(1);
@@ -120,7 +120,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.ok);
+      expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(equals([expense.toJson()])));
 
       verify(() => dataSource.readAll()).called(1);
@@ -138,7 +138,7 @@ void main() {
       final response = await route.onRequest(context);
 
       // Assert
-      expect(response.statusCode, HttpStatus.created);
+      expect(response.statusCode, equals(HttpStatus.created));
       expect(response.json(), completion(equals(expense.toJson())));
       verify(() => dataSource.create(any())).called(1);
     });
