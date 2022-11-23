@@ -6,5 +6,6 @@ linter:
   rules:
     avoid_print: true
     prefer_single_quotes: true
+    package_api_docs: true
     public_member_api_docs: true
     file_names: false

@@ -4,19 +4,16 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-import '../../routes/index.dart' as route;
+import '../../../routes/v1/index.dart' as route;
 
 class _MockRequestContext extends Mock implements RequestContext {}
 
 void main() {
-  group('GET /', () {
+  group('GET /v1', () {
     test('responds with a 200 and welcome message', () {
       // Arrange
       final context = _MockRequestContext();
-      const welcome = '''
-Welcome to Xpns Trckr API!
-Please choose a version to work with.
-''';
+      const welcome = 'Welcome to Xpns Trckr API v1!';
 
       // Act
       final response = route.onRequest(context);

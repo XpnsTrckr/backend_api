@@ -5,8 +5,8 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:xpns_trckr_api/data_source/expenses_data_source.dart';
 import 'package:xpns_trckr_api/models/expense.dart';
 
-FutureOr<Response> onRequest(RequestContext context, String str) async {
-  final id = int.tryParse(str);
+FutureOr<Response> onRequest(RequestContext context, String query) async {
+  final id = int.tryParse(query);
 
   if (id == null) {
     return Response(
@@ -39,7 +39,7 @@ FutureOr<Response> onRequest(RequestContext context, String str) async {
 
 Future<Response> _put(RequestContext context, int id) async {
   final dataSource = context.read<ExpensesDataSource>();
-  final json = context.request.json() as Map<String, dynamic>;
+  final json = await context.request.json() as Map<String, dynamic>;
   final expense = Expense.fromJson(json);
 
   await dataSource.update(id, expense);
