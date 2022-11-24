@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'expense.freezed.dart';
 part 'expense.g.dart';
 
 /// A single expense item.
@@ -10,61 +9,28 @@ part 'expense.g.dart';
 /// further this [Expense] item.
 ///
 /// [Expense]s are immutable and can be copied using [copyWith], in addition to
-/// being serialized and deserialized usign [toJson] and [fromJson]
-/// respectively.
-@immutable
-@JsonSerializable()
-class Expense extends Equatable {
+/// being json de/serializable.
+@freezed
+class Expense with _$Expense {
   /// Creates a new [Expense].
-  const Expense({
-    required this.id,
-    required this.userId,
-    required this.description,
-    required this.value,
-    required this.time,
-  });
+  const factory Expense({
+    /// The unique identifier of the expense.
+    required int id,
 
-  /// The unique identifier of the expense.
-  ///
-  /// Cannot be empty.
-  final int id;
+    /// The user whose this expense belongs to.
+    required int userId,
 
-  /// The user whose this expense belongs to.
-  ///
-  /// Cannot be empty.
-  final int userId;
+    /// Briefly description about what were expended.
+    required String description,
 
-  /// Briefly description about what were expended.
-  final String description;
+    /// How much the user expend with this expense.
+    required double value,
 
-  /// How much the user expend with this expense.
-  final double value;
-
-  /// When the user created this expense.
-  final DateTime time;
-
-  /// Returns a copy of this expense with the given values updated.
-  Expense copyWith({
-    int? id,
-    int? userId,
-    String? description,
-    double? value,
-    DateTime? time,
-  }) =>
-      Expense(
-        id: id ?? this.id,
-        userId: userId ?? this.userId,
-        description: description ?? this.description,
-        value: value ?? this.value,
-        time: time ?? this.time,
-      );
+    /// When the user created this expense.
+    required DateTime time,
+  }) = _Expense;
 
   /// Deserializes the given `Map<String, dynamic>` into a [Expense].
-  static Expense fromJson(Map<String, dynamic> json) => _$ExpenseFromJson(json);
-
-  /// Converts this [Expense] into a `Map<String, dynamic>`.
-  Map<String, dynamic> toJson() => _$ExpenseToJson(this);
-
-  @override
-  List<Object?> get props => [id, userId, description, value, time];
+  factory Expense.fromJson(Map<String, Object?> json) =>
+      _$ExpenseFromJson(json);
 }

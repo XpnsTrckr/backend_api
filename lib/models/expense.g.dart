@@ -1,12 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: non_constant_identifier_names
+
 part of 'expense.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Expense _$ExpenseFromJson(Map<String, dynamic> json) => Expense(
+_$_Expense _$$_ExpenseFromJson(Map<String, dynamic> json) => _$_Expense(
       id: json['id'] as int,
       userId: json['userId'] as int,
       description: json['description'] as String,
@@ -14,7 +16,8 @@ Expense _$ExpenseFromJson(Map<String, dynamic> json) => Expense(
       time: DateTime.parse(json['time'] as String),
     );
 
-Map<String, dynamic> _$ExpenseToJson(Expense instance) => <String, dynamic>{
+Map<String, dynamic> _$$_ExpenseToJson(_$_Expense instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
       'description': instance.description,
