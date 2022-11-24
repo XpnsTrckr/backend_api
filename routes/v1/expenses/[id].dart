@@ -42,13 +42,14 @@ Future<Response> _put(RequestContext context, int id) async {
   final json = await context.request.json() as Map<String, dynamic>;
   final expense = Expense.fromJson(json);
 
-  await dataSource.update(id, expense);
+  final updated = await dataSource.update(id, expense);
 
-  return Response.json(body: expense);
+  return Response.json(body: updated);
 }
 
 Future<Response> _delete(RequestContext context, int id) async {
   final dataSource = context.read<ExpensesDataSource>();
+
   await dataSource.delete(id);
 
   return Response(statusCode: HttpStatus.noContent);
