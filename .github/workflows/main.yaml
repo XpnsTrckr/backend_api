@@ -21,7 +21,7 @@ jobs:
       dart_sdk: 'stable'
       analyze_directories: 'lib'
       report_on: 'lib'
-      coverage_excludes: '**.freezed.dart'
+      coverage_excludes: '/*.g.dart /*.freezed.dart'
       min_coverage: 85
 
   check-routes:
@@ -30,6 +30,5 @@ jobs:
       dart_sdk: 'stable'
       analyze_directories: 'routes'
       report_on: 'routes'
-      coverage_excludes: '**.freezed.dart'
       min_coverage: 85
 
