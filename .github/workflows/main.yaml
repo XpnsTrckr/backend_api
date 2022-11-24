@@ -18,7 +18,7 @@ jobs:
   check-lib:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
-      coverage_excludes: '*.g.dart *.freezed.dart'
+      coverage_excludes: '**/*.freezed.dart **/*.g.dart'
       dart_sdk: 'stable'
       analyze_directories: 'lib'
       report_on: 'lib'
