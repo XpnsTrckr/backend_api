@@ -15,13 +15,9 @@ class Expense with _$Expense {
   /// Creates a new [Expense].
   const factory Expense({
     /// The unique identifier of the expense.
-    ///
-    /// Cannot be empty.
     required int id,
 
     /// The user whose this expense belongs to.
-    ///
-    /// Cannot be empty.
     required int userId,
 
     /// Briefly description about what were expended.
