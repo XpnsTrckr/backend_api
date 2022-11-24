@@ -31,9 +31,6 @@ void main() {
 
     group('equality', () {
       test('compared by value', () => expect(create(), equals(create())));
-      test('with correct props', () {
-        expect(create().props, equals([id, userId, description, value, time]));
-      });
     });
 
     group('copyWith', () {
