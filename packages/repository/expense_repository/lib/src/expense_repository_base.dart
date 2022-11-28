@@ -6,7 +6,7 @@ import 'package:expense/expense.dart';
 /// * R - Read
 /// * U - Update
 /// * D - Delete
-abstract class ExpensesDataSource {
+abstract class ExpenseRepository {
   /// Create and return the newly created [Expense].
   Future<Expense> create(Expense expense);
 

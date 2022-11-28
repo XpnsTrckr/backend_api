@@ -2,7 +2,7 @@ import 'package:expense/expense.dart';
 import 'package:expense_repository/expense_repository.dart';
 import 'package:test/test.dart';
 
-class _ExpensesDataSource implements ExpensesDataSource {
+class _ExpenseRepository implements ExpenseRepository {
   @override
   Future<Expense> create(Expense expense) => throw UnimplementedError();
 
@@ -20,7 +20,7 @@ class _ExpensesDataSource implements ExpensesDataSource {
 }
 
 void main() {
-  group('ExpensesDataSource', () {
-    test('can be implemented', () => expect(_ExpensesDataSource(), isNotNull));
+  group('ExpenseRepository', () {
+    test('can be implemented', () => expect(_ExpenseRepository(), isNotNull));
   });
 }
