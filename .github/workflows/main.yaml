@@ -12,17 +12,14 @@ jobs:
 
   pana:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/pana.yml@v1
+    with:
+      min_score: 95
 
   expense_package:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
       working_directory: "packages/model/expense"
       coverage_excludes: "**/*.freezed.dart **/*.g.dart"
-
-  expense_repository_package:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
-    with:
-      working_directory: "packages/repository/expense_repository"
 
   in_memory_expense_repository_package:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
