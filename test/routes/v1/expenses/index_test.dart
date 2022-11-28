@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:expense/expense.dart';
+import 'package:expense_repository/expense_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
-import 'package:xpns_trckr_api/data_source/expenses_data_source.dart';
-import 'package:xpns_trckr_api/models/expense.dart';
 
 import '../../../../routes/v1/expenses/index.dart' as route;
 
@@ -12,12 +12,12 @@ class _MockRequestContext extends Mock implements RequestContext {}
 
 class _MockRequest extends Mock implements Request {}
 
-class _MockExpensesDataSource extends Mock implements ExpensesDataSource {}
+class _MockExpenseRepository extends Mock implements ExpenseRepository {}
 
 void main() {
   late RequestContext context;
   late Request request;
-  late ExpensesDataSource dataSource;
+  late ExpenseRepository repository;
 
   final expense = Expense(
     id: 42,
@@ -32,9 +32,9 @@ void main() {
   setUp(() {
     context = _MockRequestContext();
     request = _MockRequest();
-    dataSource = _MockExpensesDataSource();
+    repository = _MockExpenseRepository();
 
-    when(() => context.read<ExpensesDataSource>()).thenReturn(dataSource);
+    when(() => context.read<ExpenseRepository>()).thenReturn(repository);
     when(() => context.request).thenReturn(request);
   });
 
@@ -99,7 +99,7 @@ void main() {
     test('responds with a 200 and an empty list', () async {
       // Arrange
       when(() => request.method).thenReturn(HttpMethod.get);
-      when(() => dataSource.readAll()).thenAnswer((_) async => []);
+      when(() => repository.readAll()).thenAnswer((_) async => []);
 
       // Act
       final response = await route.onRequest(context);
@@ -108,13 +108,13 @@ void main() {
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(isEmpty));
 
-      verify(() => dataSource.readAll()).called(1);
+      verify(() => repository.readAll()).called(1);
     });
 
     test('responds with a 200 and a populated list', () async {
       // Arrange
       when(() => request.method).thenReturn(HttpMethod.get);
-      when(() => dataSource.readAll()).thenAnswer((_) async => [expense]);
+      when(() => repository.readAll()).thenAnswer((_) async => [expense]);
 
       // Act
       final response = await route.onRequest(context);
@@ -123,7 +123,7 @@ void main() {
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(equals([expense.toJson()])));
 
-      verify(() => dataSource.readAll()).called(1);
+      verify(() => repository.readAll()).called(1);
     });
   });
 
@@ -132,7 +132,7 @@ void main() {
       // Arrange
       when(() => request.method).thenReturn(HttpMethod.post);
       when(() => request.json()).thenAnswer((_) async => expense.toJson());
-      when(() => dataSource.create(any())).thenAnswer((_) async => expense);
+      when(() => repository.create(any())).thenAnswer((_) async => expense);
 
       // Act
       final response = await route.onRequest(context);
@@ -140,7 +140,8 @@ void main() {
       // Assert
       expect(response.statusCode, equals(HttpStatus.created));
       expect(response.json(), completion(equals(expense.toJson())));
-      verify(() => dataSource.create(any())).called(1);
+
+      verify(() => repository.create(any())).called(1);
     });
   });
 }

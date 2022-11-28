@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
-import 'package:xpns_trckr_api/data_source/expenses_data_source.dart';
-import 'package:xpns_trckr_api/models/expense.dart';
+import 'package:expense/expense.dart';
+import 'package:expense_repository/expense_repository.dart';
 
 FutureOr<Response> onRequest(RequestContext context, String query) async {
   final id = int.tryParse(query);
@@ -15,8 +15,8 @@ FutureOr<Response> onRequest(RequestContext context, String query) async {
     );
   }
 
-  final dataSource = context.read<ExpensesDataSource>();
-  final expense = await dataSource.read(id);
+  final repository = context.read<ExpenseRepository>();
+  final expense = await repository.read(id);
 
   if (expense == null) {
     return Response(statusCode: HttpStatus.notFound, body: 'Not found');
@@ -38,19 +38,19 @@ FutureOr<Response> onRequest(RequestContext context, String query) async {
 }
 
 Future<Response> _put(RequestContext context, int id) async {
-  final dataSource = context.read<ExpensesDataSource>();
+  final repository = context.read<ExpenseRepository>();
   final json = await context.request.json() as Map<String, dynamic>;
   final expense = Expense.fromJson(json);
 
-  final updated = await dataSource.update(id, expense);
+  final updated = await repository.update(id, expense);
 
   return Response.json(body: updated);
 }
 
 Future<Response> _delete(RequestContext context, int id) async {
-  final dataSource = context.read<ExpensesDataSource>();
+  final repository = context.read<ExpenseRepository>();
 
-  await dataSource.delete(id);
+  await repository.delete(id);
 
   return Response(statusCode: HttpStatus.noContent);
 }

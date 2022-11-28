@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
-import 'package:xpns_trckr_api/data_source/expenses_data_source.dart';
-import 'package:xpns_trckr_api/models/expense.dart';
+import 'package:expense/expense.dart';
+import 'package:expense_repository/expense_repository.dart';
 
 FutureOr<Response> onRequest(RequestContext context) async {
   switch (context.request.method) {
@@ -21,17 +21,17 @@ FutureOr<Response> onRequest(RequestContext context) async {
 }
 
 Future<Response> _get(RequestContext context) async {
-  final dataSource = context.read<ExpensesDataSource>();
-  final expenses = await dataSource.readAll();
+  final repository = context.read<ExpenseRepository>();
+  final expenses = await repository.readAll();
   return Response.json(body: expenses);
 }
 
 Future<Response> _post(RequestContext context) async {
-  final dataSource = context.read<ExpensesDataSource>();
+  final repository = context.read<ExpenseRepository>();
   final json = await context.request.json() as Map<String, dynamic>;
   final expense = Expense.fromJson(json);
 
-  final created = await dataSource.create(expense);
+  final created = await repository.create(expense);
 
   return Response.json(statusCode: HttpStatus.created, body: created);
 }
