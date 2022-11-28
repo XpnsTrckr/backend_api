@@ -12,33 +12,25 @@ jobs:
 
   pana:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/pana.yml@v1
-    with:
-      min_score: 95
 
   expense_package:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
       working_directory: "packages/model/expense"
       coverage_excludes: "**/*.freezed.dart **/*.g.dart"
-      dart_sdk: "stable"
-      analyze_directories: "lib"
-      report_on: "lib"
-      min_coverage: 85
 
-  check-lib:
+  expense_repository_package:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
-      coverage_excludes: "**/*.freezed.dart **/*.g.dart"
-      dart_sdk: "stable"
-      analyze_directories: "lib"
-      report_on: "lib"
-      min_coverage: 85
+      working_directory: "packages/repository/expense_repository"
 
-  check-routes:
+  in_memory_expense_repository_package:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
-      dart_sdk: "stable"
-      analyze_directories: "routes"
+      working_directory: "packages/repository/in_memory_expense_repository"
+
+  xpns_trckr_api:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    with:
+      analyze_directories: "routes test"
       report_on: "routes"
-      min_coverage: 85
-
