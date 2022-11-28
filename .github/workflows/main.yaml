@@ -3,8 +3,8 @@ name: xpns_trckr_api
 on:
   pull_request:
     paths:
-      - '.github/workflows/main.yaml'
-      - '**.dart'
+      - ".github/workflows/main.yaml"
+      - "**.dart"
 
 jobs:
   semantic-pull-request:
@@ -15,20 +15,30 @@ jobs:
     with:
       min_score: 95
 
+  expense_package:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    with:
+      working_directory: "packages/model/expense"
+      coverage_excludes: "**/*.freezed.dart **/*.g.dart"
+      dart_sdk: "stable"
+      analyze_directories: "lib"
+      report_on: "lib"
+      min_coverage: 85
+
   check-lib:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
-      coverage_excludes: '**/*.freezed.dart **/*.g.dart'
-      dart_sdk: 'stable'
-      analyze_directories: 'lib'
-      report_on: 'lib'
+      coverage_excludes: "**/*.freezed.dart **/*.g.dart"
+      dart_sdk: "stable"
+      analyze_directories: "lib"
+      report_on: "lib"
       min_coverage: 85
 
   check-routes:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
-      dart_sdk: 'stable'
-      analyze_directories: 'routes'
-      report_on: 'routes'
+      dart_sdk: "stable"
+      analyze_directories: "routes"
+      report_on: "routes"
       min_coverage: 85
 
