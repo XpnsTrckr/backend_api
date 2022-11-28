@@ -1,9 +1,9 @@
 import 'package:dart_frog/dart_frog.dart';
-import 'package:xpns_trckr_api/data_source/expenses_data_source.dart';
-import 'package:xpns_trckr_api/data_source/in_memory_expenses_data_source.dart';
+import 'package:expense_repository/expense_repository.dart';
+import 'package:in_memory_expense_repository/in_memory_expense_repository.dart';
 
-final _dataSource = InMemoryExpensesDataSource();
+final _repository = InMemoryExpensesRepository();
 
 /// Middleware used for version 1.
 Handler middleware(Handler handler) =>
-    handler.use(provider<ExpensesDataSource>((_) => _dataSource));
+    handler.use(provider<ExpenseRepository>((_) => _repository));

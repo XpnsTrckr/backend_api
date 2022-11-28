@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'expense.freezed.dart';
-part 'expense.g.dart';
+part 'expense_base.freezed.dart';
+part 'expense_base.g.dart';
 
 /// A single expense item.
 ///

@@ -2,7 +2,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of 'expense.dart';
+part of 'expense_base.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

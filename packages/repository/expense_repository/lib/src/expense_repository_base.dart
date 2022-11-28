@@ -1,12 +1,12 @@
-import 'package:xpns_trckr_api/models/expense.dart';
+import 'package:expense/expense.dart';
 
-/// An interface for an expenses data source.
-/// An expenses data source supports basic C.R.U.D operations.
+/// An interface for an expense repository.
+/// An expense repository supports basic C.R.U.D operations.
 /// * C - Create
 /// * R - Read
 /// * U - Update
 /// * D - Delete
-abstract class ExpensesDataSource {
+abstract class ExpenseRepository {
   /// Create and return the newly created [Expense].
   Future<Expense> create(Expense expense);
 

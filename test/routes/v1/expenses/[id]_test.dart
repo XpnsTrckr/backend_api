@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:expense/expense.dart';
+import 'package:expense_repository/expense_repository.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
-import 'package:xpns_trckr_api/data_source/expenses_data_source.dart';
-import 'package:xpns_trckr_api/models/expense.dart';
 
 import '../../../../routes/v1/expenses/[id].dart' as route;
 
@@ -12,12 +12,12 @@ class _MockRequestContext extends Mock implements RequestContext {}
 
 class _MockRequest extends Mock implements Request {}
 
-class _MockExpensesDataSource extends Mock implements ExpensesDataSource {}
+class _MockExpensesRepository extends Mock implements ExpenseRepository {}
 
 void main() {
   late RequestContext context;
   late Request request;
-  late ExpensesDataSource dataSource;
+  late ExpenseRepository repository;
 
   const query = '42';
   const id = 42;
@@ -34,15 +34,15 @@ void main() {
   setUp(() {
     context = _MockRequestContext();
     request = _MockRequest();
-    dataSource = _MockExpensesDataSource();
+    repository = _MockExpensesRepository();
 
-    when(() => context.read<ExpensesDataSource>()).thenReturn(dataSource);
+    when(() => context.read<ExpenseRepository>()).thenReturn(repository);
     when(() => context.request).thenReturn(request);
   });
 
   group('responds with a 405', () {
     setUp(() {
-      when(() => dataSource.read(any())).thenAnswer((_) async => expense);
+      when(() => repository.read(any())).thenAnswer((_) async => expense);
     });
 
     test('when method is HEAD', () async {
@@ -93,8 +93,8 @@ void main() {
   group('responds with a 400', () {
     test('when query is not a valid id', () async {
       // Arrange
-      when(() => request.method).thenReturn(HttpMethod.get);
       const invalid = 'not a valid query';
+      when(() => request.method).thenReturn(HttpMethod.get);
 
       // Act
       final response = await route.onRequest(context, invalid);
@@ -102,7 +102,7 @@ void main() {
       // Assert
       expect(response.statusCode, equals(HttpStatus.badRequest));
 
-      verifyNever(() => dataSource.read(any()));
+      verifyNever(() => repository.read(any()));
     });
   });
 
@@ -110,14 +110,15 @@ void main() {
     test('when no expense is found', () async {
       // Arrange
       when(() => request.method).thenReturn(HttpMethod.get);
-      when(() => dataSource.read(any())).thenAnswer((_) async => null);
+      when(() => repository.read(any())).thenAnswer((_) async => null);
 
       // Act
       final response = await route.onRequest(context, query);
 
       // Assert
       expect(response.statusCode, equals(HttpStatus.notFound));
-      verify(() => dataSource.read(any(that: equals(id)))).called(1);
+
+      verify(() => repository.read(any(that: equals(id)))).called(1);
     });
   });
 
@@ -125,7 +126,7 @@ void main() {
     test('responds with 200 when expense is found', () async {
       // Arrange
       when(() => request.method).thenReturn(HttpMethod.get);
-      when(() => dataSource.read(any())).thenAnswer((_) async => expense);
+      when(() => repository.read(any())).thenAnswer((_) async => expense);
 
       // Act
       final response = await route.onRequest(context, query);
@@ -134,7 +135,7 @@ void main() {
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(equals(expense.toJson())));
 
-      verify(() => dataSource.read(any(that: equals(id)))).called(1);
+      verify(() => repository.read(any(that: equals(id)))).called(1);
     });
   });
 
@@ -146,8 +147,8 @@ void main() {
       when(() => request.method).thenReturn(HttpMethod.put);
       when(() => request.json()).thenAnswer((_) async => updated.toJson());
 
-      when(() => dataSource.read(any())).thenAnswer((_) async => expense);
-      when(() => dataSource.update(any(), any()))
+      when(() => repository.read(any())).thenAnswer((_) async => expense);
+      when(() => repository.update(any(), any()))
           .thenAnswer((_) async => updated);
 
       // Act
@@ -157,9 +158,9 @@ void main() {
       expect(response.statusCode, equals(HttpStatus.ok));
       expect(response.json(), completion(equals(updated.toJson())));
 
-      verify(() => dataSource.read(any(that: equals(id)))).called(1);
+      verify(() => repository.read(any(that: equals(id)))).called(1);
       verify(
-        () => dataSource.update(
+        () => repository.update(
           any(that: equals(id)),
           any(that: equals(updated)),
         ),
@@ -171,8 +172,8 @@ void main() {
     test('responds with 204 and deletes the expense', () async {
       // Arrange
       when(() => request.method).thenReturn(HttpMethod.delete);
-      when(() => dataSource.read(any())).thenAnswer((_) async => expense);
-      when(() => dataSource.delete(any())).thenAnswer((_) async {});
+      when(() => repository.read(any())).thenAnswer((_) async => expense);
+      when(() => repository.delete(any())).thenAnswer((_) async {});
 
       // Act
       final response = await route.onRequest(context, query);
@@ -181,8 +182,8 @@ void main() {
       expect(response.statusCode, equals(HttpStatus.noContent));
       expect(response.body(), completion(isEmpty));
 
-      verify(() => dataSource.read(any(that: equals(id)))).called(1);
-      verify(() => dataSource.delete(any(that: equals(id)))).called(1);
+      verify(() => repository.read(any(that: equals(id)))).called(1);
+      verify(() => repository.delete(any(that: equals(id)))).called(1);
     });
   });
 }

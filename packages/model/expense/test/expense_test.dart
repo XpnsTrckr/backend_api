@@ -1,5 +1,5 @@
+import 'package:expense/expense.dart';
 import 'package:test/test.dart';
-import 'package:xpns_trckr_api/models/expense.dart';
 
 void main() {
   group('Expense model', () {
