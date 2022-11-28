@@ -1,0 +1,16 @@
+name: expense_repository
+description: An interface for an expense repository.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  expense:
+    path: '../../model/expense'
+
+
+dev_dependencies:
+  test: ^1.16.0
+  very_good_analysis: ^3.1.0
